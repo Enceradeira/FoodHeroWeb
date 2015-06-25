@@ -45,3 +45,10 @@ group :development, :test do
   gem 'spring'
 end
 
+group :production do
+  # Plugin system for Heroku
+  gem 'rails_12factor'
+end
+
+# Configure ruby on Heroku
+ruby '2.2.2'
