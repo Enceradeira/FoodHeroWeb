@@ -53,4 +53,8 @@ Rails.application.routes.draw do
   #     # (app/controllers/admin/products_controller.rb)
   #     resources :products
   #   end
+
+  root 'legal#privacy_policy'
+
+  get 'legal/privacy_policy/' => 'legal#privacy_policy'
 end
