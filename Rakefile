@@ -7,5 +7,11 @@ Rails.application.load_tasks
 
 
 desc 'Resets the local deployment'
-  task :reset => %w(db:drop:all db:create:all db:migrate) do
+task 'reset:local' => %w(db:drop:all db:create:all db:migrate)
+
+desc 'Deploys app to heroku'
+task :deploy do
+  `git push heroku master`
+  # exec in clean_env -> http://stackoverflow.com/questions/23037148/why-do-i-get-a-rubyversionmismatch-when-calling-heroku-toolbelt-cli-with-rake
+  Bundler.with_clean_env { p `heroku run rake db:migrate` }
 end
