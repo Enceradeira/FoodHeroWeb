@@ -18,3 +18,4 @@
 
 # Ingore ruby-mine project files
 /.idea
+.env
