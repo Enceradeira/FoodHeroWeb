@@ -54,7 +54,16 @@ Rails.application.routes.draw do
   #     resources :products
   #   end
 
+  # html
   root 'legal#privacy_policy'
-
   get 'legal/privacy_policy/' => 'legal#privacy_policy'
+
+  # apis
+  scope '/api' do
+    scope '/v1' do
+      scope 'places' do
+        get '/' => 'places#search'
+      end
+    end
+  end
 end
