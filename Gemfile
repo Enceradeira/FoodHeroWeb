@@ -55,4 +55,5 @@ group :production do
 end
 
 # Configure ruby on Heroku
-ruby '2.2.2'
+#ruby=ruby-2.2.2
+#ruby-gemset=FoodHero-Web
