@@ -54,6 +54,7 @@ group :production do
   gem 'rails_12factor'
 end
 
-# Configure ruby on Heroku
+# Configure ruby on Heroku (WARNING: When changing ruby-version change ALL LINES)
+ruby '2.2.2'
 #ruby=ruby-2.2.2
 #ruby-gemset=FoodHero-Web
