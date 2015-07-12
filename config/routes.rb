@@ -58,7 +58,7 @@ Rails.application.routes.draw do
   root 'legal#privacy_policy'
   get 'legal/privacy_policy/' => 'legal#privacy_policy'
 
-  # apis
+  # api
   scope '/api' do
     scope '/v1' do
       scope 'places' do
