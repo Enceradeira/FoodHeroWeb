@@ -11,8 +11,8 @@ describe 'Places API', :type=>[:request] do
       first_place = json[0]
       expect(first_place['placeId']).not_to be_empty
       expect(first_place['location']).not_to be_nil
-      expect(first_place['location']['latitude']).not_to be_empty
-      expect(first_place['location']['longitude']).not_to be_empty
+      expect(first_place['location']['latitude']).not_to be == 0
+      expect(first_place['location']['longitude']).not_to be == 0
       expect(first_place['cuisineRelevance']).to be > 0
     end
   end

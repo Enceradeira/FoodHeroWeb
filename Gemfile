@@ -27,6 +27,8 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 
 gem 'puma'
 
+gem 'faraday'
+
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
@@ -54,7 +56,7 @@ group :production do
   gem 'rails_12factor'
 end
 
-# Configure ruby on Heroku (WARNING: When changing ruby-version change ALL LINES)
+# Configure ruby on Heroku (WARNING: When changing ruby-version change ALSO #ruby=)
 ruby '2.2.2'
 #ruby=ruby-2.2.2
 #ruby-gemset=FoodHero-Web
