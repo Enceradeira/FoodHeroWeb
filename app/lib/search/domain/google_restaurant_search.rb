@@ -6,7 +6,7 @@ module Search
       end
 
       def find_places(cuisine, occasion, coordinate, radius)
-        types = []
+        types = OccasionToGoogleTypeMapper.map(occasion)
 
         @search.find_places(cuisine: cuisine, types: types, coordinate: coordinate, radius: radius, min_price: 0, max_price: 4).map do |place|
           Place.new(place.placeId, place.location, 0.89)
