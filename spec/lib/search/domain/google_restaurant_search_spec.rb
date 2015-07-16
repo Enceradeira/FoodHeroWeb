@@ -1,16 +1,37 @@
 require 'rails_helper'
 
 module Search::Domain
-  describe 'GoogleRestaurantSearch'  do
-    let(:search){Search::Domain::GoogleRestaurantSearch.new}
+  describe 'GoogleRestaurantSearch' do
+
+    let(:search) { Search::Domain::GoogleRestaurantSearch.new(radar_search) }
 
     describe 'find_places' do
-      it 'should return something from google' do
-        london = Search::Domain::Coordinate.new(51.507571, -0.127702)
+      context 'with radar_search-double' do
+        let(:radar_search) { double() }
 
-        places = search.find_places 'Indian food', 'lunch', london, 10000
+        it 'should return places from google' do
+          place_location = Search::Domain::Coordinate.new(51.004587, 0.2254)
+          allow(radar_search).to receive(:find_places).and_return([Search::Infrastructure::GooglePlace.new('A45', place_location)])
 
-        expect(places).not_to be_empty
+          london = Search::Domain::Coordinate.new(51.507571, -0.127702)
+          places = search.find_places 'Indian food', 'lunch', london, 10000
+
+          expect(places).not_to be_empty
+          place = places[0]
+          expect(place.placeId).to be == 'A45'
+          expect(place.location).to be == place_location
+        end
+      end
+      context 'with radar_search-spy' do
+        let(:radar_search) { spy() }
+
+        it 'should use correct parameters' do
+          london = Search::Domain::Coordinate.new(51.507571, -0.127702)
+          search.find_places 'Indian food', 'lunch', london, 10000
+
+          expect(radar_search).to have_received(:find_places).with({cuisine: 'Indian food', types: [], coordinate: london, radius:10000, min_price: 0, max_price: 4})
+
+        end
       end
     end
   end
