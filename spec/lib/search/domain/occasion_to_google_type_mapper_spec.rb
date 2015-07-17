@@ -2,7 +2,7 @@ require 'rails_helper'
 
 module Search
   module Domain
-    describe 'OccasionToGoogleTypeMapper' do
+    describe OccasionToGoogleTypeMapper do
       let (:all_search_types) { %w(bakery cafe restaurant meal_takeaway meal_delivery bar night_club) }
       describe 'map' do
         subject { OccasionToGoogleTypeMapper.map(occasion) }

@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 module Search::Infrastructure
-  describe 'GoogleRadarSearch' do
+  describe GoogleRadarSearch do
     describe 'find_places' do
       let(:location) { Search::Domain::Coordinate.new(51.507571, -0.127702) }
       let(:radius) { 10000 }

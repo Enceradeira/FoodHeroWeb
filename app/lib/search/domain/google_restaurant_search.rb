@@ -5,6 +5,9 @@ module Search
         def google_max_search_radius
           50000
         end
+        def google_max_search_results
+          200
+        end
       end
 
       def initialize(google_radar_search)

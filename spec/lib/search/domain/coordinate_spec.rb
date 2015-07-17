@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 module Search::Domain
-  describe 'Coordinate' do
+  describe Coordinate do
     describe 'new' do
       context 'with String' do
         it 'should parse latitude and longitude' do

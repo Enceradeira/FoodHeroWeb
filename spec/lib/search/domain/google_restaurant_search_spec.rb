@@ -1,10 +1,9 @@
 require 'rails_helper'
 
 GooglePlace = Search::Infrastructure::GooglePlace
-Coordinate = Search::Domain::Coordinate
 
 module Search::Domain
-  describe 'GoogleRestaurantSearch' do
+  describe GoogleRestaurantSearch do
     let(:london) { build(:coordinate) }
     let(:search) { GoogleRestaurantSearch.new(radar_search) }
     let(:radius) { 10000 }
@@ -29,7 +28,7 @@ module Search::Domain
         end
 
         context 'when radius equal 0' do
-          let(:radius) { 1 }
+          let(:radius) { 0 }
 
           it 'should calculate cuisineRelevance 1 for all places' do
             allow(radar_search).to receive(:find_places).and_return(three_google_places)
@@ -41,7 +40,7 @@ module Search::Domain
         end
 
         context 'when radius equal half max.radius' do
-          let(:radius) { Search::Domain::GoogleRestaurantSearch.google_max_search_radius / 2 }
+          let(:radius) { GoogleRestaurantSearch.google_max_search_radius / 2 }
 
           it 'should calculate a decreasing cuisineRelevance for more irrelevant place' do
             allow(radar_search).to receive(:find_places).and_return(three_google_places)
@@ -53,7 +52,7 @@ module Search::Domain
         end
 
         context 'when radius equal max.radius' do
-          let(:radius) { Search::Domain::GoogleRestaurantSearch.google_max_search_radius }
+          let(:radius) { GoogleRestaurantSearch.google_max_search_radius }
 
           it 'should calculate a decreasing cuisineRelevance for more irrelevant place' do
             allow(radar_search).to receive(:find_places).and_return(three_google_places)
@@ -64,7 +63,7 @@ module Search::Domain
           end
         end
 
-        [0, Search::Domain::GoogleRestaurantSearch.google_max_search_radius/2, Search::Domain::GoogleRestaurantSearch.google_max_search_radius].each do |r|
+        [0, GoogleRestaurantSearch.google_max_search_radius/2, GoogleRestaurantSearch.google_max_search_radius].each do |r|
           context "with radius #{r}" do
             it 'should calculate cuisineRelevance 1 when there is only one place' do
               allow(radar_search).to receive(:find_places).and_return([build(:google_place)])
