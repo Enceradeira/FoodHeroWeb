@@ -3,45 +3,29 @@ require 'rails_helper'
 GooglePlace = Search::Infrastructure::GooglePlace
 Coordinate = Search::Domain::Coordinate
 
-module Helper
-  def google_place(place_id, latitude, longitude)
-    GooglePlace.new(place_id, coordinate(latitude, longitude))
-  end
-
-  def coordinate(latitude, longitude)
-    Coordinate.new(latitude, longitude)
-  end
-end
-
-RSpec.configure do |c|
-  c.include Helper
-end
-
 module Search::Domain
   describe 'GoogleRestaurantSearch' do
-    let(:london) { coordinate(51.507571, -0.127702) }
+    let(:london) { build(:coordinate) }
     let(:search) { GoogleRestaurantSearch.new(radar_search) }
     let(:radius) { 10000 }
     let(:find_places) { search.find_places 'Indian food', 'lunch', london, radius }
-    let(:three_google_places) { [
-        google_place('A45', 51.004587, 0.2254),
-        google_place('B22', 51.4456, 0.7778),
-        google_place('C44', 51.2211, 0.25548)
-    ] }
+    let(:three_google_places) { [build(:google_place), build(:google_place), build(:google_place)] }
 
     describe 'find_places' do
       context 'with radar_search-double' do
         let(:radar_search) { double() }
 
         it 'should return places from google' do
-          allow(radar_search).to receive(:find_places).and_return([google_place('A45', 51.004587, 0.2254)])
+          location = build(:coordinate, latitude: 51.004587, longitude: 0.2254)
+          google_place = build(:google_place, placeId: 'A45', location: location)
+          allow(radar_search).to receive(:find_places).and_return([google_place])
 
           places = find_places
 
           expect(places).not_to be_empty
           place = places[0]
           expect(place.placeId).to be == 'A45'
-          expect(place.location).to be == coordinate(51.004587, 0.2254)
+          expect(place.location).to be == build(:coordinate, latitude: 51.004587, longitude: 0.2254)
         end
 
         context 'when radius equal 0' do
@@ -83,7 +67,7 @@ module Search::Domain
         [0, Search::Domain::GoogleRestaurantSearch.google_max_search_radius/2, Search::Domain::GoogleRestaurantSearch.google_max_search_radius].each do |r|
           context "with radius #{r}" do
             it 'should calculate cuisineRelevance 1 when there is only one place' do
-              allow(radar_search).to receive(:find_places).and_return([google_place('A45', 51.004587, 0.2254)])
+              allow(radar_search).to receive(:find_places).and_return([build(:google_place)])
 
               places = find_places
               expect(places[0].cuisineRelevance).to be == 1
