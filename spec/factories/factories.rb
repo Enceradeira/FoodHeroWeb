@@ -8,4 +8,10 @@ FactoryGirl.define do
     sequence(:placeId) { |n| "#{n}1a0b#{n+4}42c79826#{n+1}" }
     association :location, factory: :coordinate, strategy: :build
   end
+
+  factory :place_with_relevance, class: Search::Domain::PlaceWithRelevance do
+    sequence(:placeId) { |n| "#{n}1a0b#{n+4}42c79826#{n+1}" }
+    association :location, factory: :coordinate, strategy: :build
+    sequence(:cuisineRelevance) { |n| [1.0 - (n.to_f/100)+0.01, 0].max }
+  end
 end

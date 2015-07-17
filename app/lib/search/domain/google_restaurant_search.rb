@@ -8,15 +8,21 @@ module Search
         def google_max_search_results
           200
         end
+        def google_price_level_min
+          0
+        end
+        def google_price_level_max
+          4
+        end
       end
 
       def initialize(google_radar_search)
         @search = google_radar_search
       end
 
-      def find_places(cuisine, occasion, coordinate, radius)
+      def find_places(cuisine, occasion, coordinate, radius, min_price, max_price)
         types = OccasionToGoogleTypeMapper.map(occasion)
-        places = @search.find_places(cuisine: cuisine, types: types, coordinate: coordinate, radius: radius, min_price: 0, max_price: 4)
+        places = @search.find_places(cuisine: cuisine, types: types, coordinate: coordinate, radius: radius, min_price: min_price, max_price: max_price)
 
 =begin Following calculations assigns a relevance. The first places in the result-sets are more relevant.
      Furthermore it accounts for the fact that when using a greater radius results seem to become less
@@ -45,7 +51,7 @@ module Search
 
 
         places.each_with_index.map do |place, i|
-          Place.new(place.placeId, place.location, (n*i)+1)
+          PlaceWithRelevance.new(place.placeId, place.location, (n*i)+1)
         end
       end
     end

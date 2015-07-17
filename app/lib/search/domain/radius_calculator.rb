@@ -5,24 +5,24 @@ module Search
         private
         def another_search_required(result, delta, radius)
           length = result.length
-          max_nr_results = GoogleRestaurantSearch.google_max_search_results
+          max_nr_results = Search::Domain::GoogleRestaurantSearch.google_max_search_results
 
           length_nok = length >= max_nr_results || length < (max_nr_results * 0.5)
           makes_sense_to_change_radius = delta > min_radius_change
-          length_nok && makes_sense_to_change_radius && radius <= GoogleRestaurantSearch.google_max_search_radius
+          length_nok && makes_sense_to_change_radius && radius <= Search::Domain::GoogleRestaurantSearch.google_max_search_radius
         end
 
         public
         def initial_search_radius
-          GoogleRestaurantSearch.google_max_search_radius/2
+          Search::Domain::GoogleRestaurantSearch.google_max_search_radius/2
         end
 
         def initial_radius_decrease
-          GoogleRestaurantSearch.google_max_search_radius/4
+          Search::Domain::GoogleRestaurantSearch.google_max_search_radius/4
         end
 
         def radius_increase
-          GoogleRestaurantSearch.google_max_search_radius / 10
+          Search::Domain::GoogleRestaurantSearch.google_max_search_radius / 10
         end
 
         def min_radius_change
@@ -35,7 +35,7 @@ module Search
           result = []
           while true
             result = yield radius
-            if result.length >= GoogleRestaurantSearch.google_max_search_results
+            if result.length >= Search::Domain::GoogleRestaurantSearch.google_max_search_results
               radius -= radius_delta
               break unless another_search_required(result, radius_delta, radius)
             else

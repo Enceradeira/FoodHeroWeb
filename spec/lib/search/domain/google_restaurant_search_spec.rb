@@ -7,12 +7,15 @@ module Search::Domain
     let(:london) { build(:coordinate) }
     let(:search) { GoogleRestaurantSearch.new(radar_search) }
     let(:radius) { 10000 }
-    let(:find_places) { search.find_places 'Indian food', 'lunch', london, radius }
+    let(:min_price) { 1 }
+    let(:max_price) { 3 }
+    let(:find_places) { search.find_places 'Indian food', 'lunch', london, radius, min_price, max_price }
     let(:three_google_places) { [build(:google_place), build(:google_place), build(:google_place)] }
 
     describe 'find_places' do
       context 'with radar_search-double' do
         let(:radar_search) { double() }
+
 
         it 'should return places from google' do
           location = build(:coordinate, latitude: 51.004587, longitude: 0.2254)
@@ -86,8 +89,8 @@ module Search::Domain
                                                                        types: OccasionToGoogleTypeMapper.type_for_lunch,
                                                                        coordinate: london,
                                                                        radius: radius,
-                                                                       min_price: 0,
-                                                                       max_price: 4})
+                                                                       min_price: min_price,
+                                                                       max_price: max_price})
         end
       end
     end
