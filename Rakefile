@@ -30,7 +30,7 @@ task :start_development_env do
 end
 
 desc 'Stops all environments'
-task :stop_environments do
+task :stop_envs do
   `ps | grep foreman | grep -v grep | awk '{print "kill  " $1}' | sh`
 end
 
