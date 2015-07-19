@@ -22,6 +22,13 @@ task :start_integration_env do
   end
 end
 
+desc 'Starts the development environment'
+task :start_development_env do
+  fork do
+    Bundler.with_clean_env { `foreman start -e .env &` }
+  end
+end
+
 desc 'Stops all environments'
 task :stop_environments do
   `ps | grep foreman | grep -v grep | awk '{print "kill  " $1}' | sh`

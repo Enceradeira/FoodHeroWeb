@@ -12,7 +12,6 @@ module Search::Domain
       end.map do |k, v|
         v
       end.flatten
-      result
     end
   end
 

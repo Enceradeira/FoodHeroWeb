@@ -1,0 +1,61 @@
+{
+   "html_attributions" : [],
+   "results" : [
+      {
+         "geometry" : {
+            "location" : {
+               "lat" : 51.491602,
+               "lng" : -0.161519
+            }
+         },
+         "id" : "c95905e1ca47f0e723ba535f15b879d7cf9191f8",
+         "place_id" : "ChIJ_0fPqhUFdkgR5JgOyRoj5sc",
+         "reference" : "CmRZAAAAsE4PeNrvDHm6KoU4nNL-eEqNid6wSVx6dseFQlxd8HQAcHC5s8RmN1LfaQ_OjKJHHZXG_SolqPJCLUR0ybCz4ldbI4Ga_w6xlbdaWfns8QQoYZkD5WEjv47bbCiJLmjGEhDPBJvdJXGdrRA9gGNIBIVMGhSowUsUYu71HYPgmu9Bgloq6Sr_Dg"
+      },
+      {
+         "geometry" : {
+            "location" : {
+               "lat" : 51.508088,
+               "lng" : -0.131121
+            }
+         },
+         "id" : "ae36a26eeec9e31f978e2f35154ff7091cfd9e7e",
+         "place_id" : "ChIJPVJVmNEEdkgRNtbDFaq89yM",
+         "reference" : "CnRtAAAAkLWENnjL7zeLcX7NDXWNKYbC2HMaZ78--RxmdQEJ5SoTfVaNPuzb96h46aXTa_FYy-ok5rW2iyo0ARHxCWeWCoA02Tx8Wm4OHAUioD_MrczzS5WiCIuXdmnu7QLcPC3JdGC7o1OSO84iEtL_dI86HBIQpnuhTsU7ginN-NKwY1dkghoUTGbUBSenJOfqUo0b8mDkSPofh8U"
+      },
+      {
+         "geometry" : {
+            "location" : {
+               "lat" : 51.519124,
+               "lng" : -0.135097
+            }
+         },
+         "id" : "197e418663dedca8ba7f58d5a9030bb4fd67f66d",
+         "place_id" : "ChIJh8IKCiwbdkgRiefHU7gpZfU",
+         "reference" : "CmRgAAAA3Ko_aatRGk6cWXJ0jNSTzlkCARtpv6PeTboB3q_FPOJK5-bTmIEtEko-HewRXGmthC4Vfc6enmiU2jXhCxVnI4ZdwyAOHkaCpEi98zN55lSYyGFfRbtLOggIqn2AbWWrEhDxbtBTlkjeFUt1nOM-s60IGhTc0AfRdSKUrgFzEbwqTOcl1OIEWQ"
+      },
+      {
+         "geometry" : {
+            "location" : {
+               "lat" : 51.499579,
+               "lng" : -0.156598
+            }
+         },
+         "id" : "7ff00e34ea0572427bd03af75704f742b7ee6eb6",
+         "place_id" : "ChIJBWbG7DsFdkgRUoGawp2ooK8",
+         "reference" : "CmRaAAAAAwv4vlSdR5D3su87w8rHOf0lQdK2-jq6lbvzm9fQUPtJf6SbJAOSJBy5Q9BTubbaWxhqEA26mv-aFKCKDdAbgwXTsy__tEZlkAXKasX8tusIsW-gUVNwcHM_fK3e8bC5EhDiF4HndFf76X6AYyUc_BcdGhTaEcfWYICSswJOk3yFziV2IBbwrQ"
+      },
+      {
+         "geometry" : {
+            "location" : {
+               "lat" : 51.513067,
+               "lng" : -0.08903
+            }
+         },
+         "id" : "5566f8e8dad881b5efc2a499895824705371b232",
+         "place_id" : "ChIJMz9GjlQDdkgR_JrS2W6SR5w",
+         "reference" : "CnRkAAAA-BgnTtHBZduJFogEcmCTsvC4lCIIfJkcHshqj-tr2oQxrNKe8gP7lXMQB8U72xCzfya4DXc5klmmM3N4jN_fAHePpBwvN9rJrClGvaqvPEAXbzU2ewsvqfnXqBDAVkPm1qO8SG1UjK5L6VUTpIDXCRIQ40ANO0SGWphfhwFyUxm5NBoUe2KTrF5BriQ204_SeGlkQHuI5Bc"
+      }
+   ],
+   "status" : "OK"
+}

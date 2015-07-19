@@ -2,27 +2,28 @@ require 'rails_helper'
 
 module Search::Infrastructure
   describe GoogleRadarSearch do
+    let(:search) { GoogleRadarSearch.new(stub_connection) }
+    let(:stub_connection) {
+      Faraday.new do |builder|
+        builder.adapter :test do |stub|
+          'no stubbed request for get  '
+          stub.get(expected_url) { |_| [response_code, {}, response_body] }
+        end
+      end
+    }
+
     describe 'find_places' do
       let(:location) { Search::Domain::Coordinate.new(51.507571, -0.127702) }
       let(:radius) { 10000 }
       let(:cuisine) { 'Indian food' }
       let(:types) { %w(restaurant meal_takeaway) }
-      let(:min_price) {1}
-      let(:max_price) {4}
+      let(:min_price) { 1 }
+      let(:max_price) { 4 }
       let(:expected_url) { '/radarsearch/json?keyword=Indian+food&location=51.507571,-0.127702&radius=10000&minprice=1&maxprice=4&types=restaurant%7Cmeal_takeaway&opennow=1' }
 
-      let(:search) { GoogleRadarSearch.new(stub_connection) }
       let(:find_places) { lambda { search.find_places cuisine: cuisine, types: types, coordinate: location, radius: radius, min_price: min_price, max_price: max_price } }
       let(:response_code) { 200 }
       let(:response_body) { '' }
-      let(:stub_connection) {
-        Faraday.new do |builder|
-          builder.adapter :test do |stub|
-            'no stubbed request for get  '
-            stub.get(expected_url) { |_| [response_code, {}, response_body] }
-          end
-        end
-      }
 
       context 'when response is 400' do
         let(:response_code) { 400 }
@@ -57,6 +58,21 @@ Body: internal error')
           expect(location.latitude).to be == -33.870775
           expect(location.longitude).to be == 151.199025
         end
+      end
+    end
+
+    describe 'find_places_in_fake_file' do
+      let(:price_range) { (Search::Domain::GoogleRestaurantSearch.google_price_level_min..Search::Domain::GoogleRestaurantSearch.google_price_level_max) }
+
+      it 'should return something for every priceLevel' do
+        all_places = GoogleRadarSearch.find_places_in_fake_file(price_range.first, price_range.max)
+        expect(all_places).not_to be_empty
+
+        all_places_per_price_level = price_range.map do |price|
+          GoogleRadarSearch.find_places_in_fake_file(price, price)
+        end.flatten
+
+        expect(all_places_per_price_level).to include(*all_places)
       end
     end
   end
