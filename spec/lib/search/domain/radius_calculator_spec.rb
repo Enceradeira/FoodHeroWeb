@@ -27,7 +27,7 @@ module Search
           end
 
           isr = RadiusCalculator.initial_search_radius
-          ird = RadiusCalculator.initial_radius_decrease
+          ird = RadiusCalculator.initial_radius_change
           expect(radii[0]).to be == isr
           expect(radii[1]).to be == isr - ird
           expect(radii[2]).to be == isr - ird - (ird/2)
@@ -43,28 +43,42 @@ module Search
           end
 
           isr = RadiusCalculator.initial_search_radius
-          ri = RadiusCalculator.radius_increase
+          ird = RadiusCalculator.initial_radius_change
           expect(radii[0]).to be == isr
-          expect(radii[1]).to be == isr + ri
-          expect(radii[2]).to be == isr + ri+ ri
-          expect(radii[3]).to be == isr + ri+ ri+ ri
+          expect(radii[1]).to be == isr + ird
+          expect(radii[2]).to be == isr + ird + (ird/2)
+          expect(radii[3]).to be == isr + ird + (ird/2) + (ird/4)
         end
 
         it 'should return last results when search radius reaches max. search radius' do
+          isr = RadiusCalculator.initial_search_radius
+          ird = RadiusCalculator.initial_radius_change
+
+          result_at_last_expected_radius = result_for_too_specific + Array.new(10)
+          expected_radii = [
+              isr,
+              isr+ird,
+              isr+ird+ird/2,
+              isr+ird+ird/2+ird/4,
+              isr+ird+ird/2+ird/4+ird/8,
+              isr+ird+ird/2+ird/4+ird/8+ird/16,
+              isr+ird+ird/2+ird/4+ird/8+ird/16+ird/32]
+          last_expected_radius = expected_radii.last
+
           radii = []
-          result_at_max_radius = result_for_too_specific + Array.new(10)
           result = RadiusCalculator.do_until_nr_of_results_ok do |radius|
             radii << radius
-            if radius < GoogleRestaurantSearch.google_max_search_radius
+            if radius < last_expected_radius
               # too specific lets algorithm increase radius
               result_for_too_specific
             else
-              result_at_max_radius
+              result_at_last_expected_radius
             end
           end
 
-          expect(result.length).to be == result_at_max_radius.length
-          expect(radii.last).to be == GoogleRestaurantSearch.google_max_search_radius
+
+          expect(result.length).to be == result_at_last_expected_radius.length
+          expect(radii).to match_array(expected_radii)
         end
 
         it 'should stop searching when radius cant be decreased anymore' do
@@ -76,7 +90,7 @@ module Search
           end
 
           expect(result.length).to be == result_for_too_broad.length
-          expect(radii.last).to be_between(0,1000)
+          expect(radii.last).to be_between(0, 1000)
         end
       end
     end

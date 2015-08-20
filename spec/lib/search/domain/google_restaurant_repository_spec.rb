@@ -44,7 +44,7 @@ module Search::Domain
           repository.find_places('Indian', 'lunch', coordinate)
 
           initial_radius = RadiusCalculator.initial_search_radius
-          initial_decrease = RadiusCalculator.initial_radius_decrease
+          initial_decrease = RadiusCalculator.initial_radius_change
           expect(restaurant_search).to have_received(:find_places).with('Indian', 'lunch', coordinate,
                                                                         initial_radius, price_range.first, price_range.last)
           expect(restaurant_search).to have_received(:find_places).with('Indian', 'lunch', coordinate,

@@ -17,30 +17,27 @@ module Search
           Search::Domain::GoogleRestaurantSearch.google_max_search_radius/2
         end
 
-        def initial_radius_decrease
+        def initial_radius_change
           Search::Domain::GoogleRestaurantSearch.google_max_search_radius/4
         end
 
-        def radius_increase
-          Search::Domain::GoogleRestaurantSearch.google_max_search_radius / 10
-        end
-
         def min_radius_change
-          500
+          250
         end
 
         def do_until_nr_of_results_ok
           radius = initial_search_radius
-          radius_delta = initial_radius_decrease
+          radius_delta = initial_radius_change
           result = []
+          # 'binary' search starting from the initial_search_radius
           while true
             result = yield radius
             if result.length >= Search::Domain::GoogleRestaurantSearch.google_max_search_results
               radius -= radius_delta
               break unless another_search_required(result, radius_delta, radius)
             else
-              radius += radius_increase
-              break unless another_search_required(result, radius_increase, radius)
+              radius += radius_delta
+              break unless another_search_required(result, radius_delta, radius)
             end
             radius_delta /= 2
           end

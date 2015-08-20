@@ -4,7 +4,7 @@ describe 'Places API', :type=>[:request] do
 
   describe 'GET search' do
     it 'should return places from Google-places-API' do
-      get '/api/v1/places?cuisine=Indian%20Food&occasion=lunch&location=51.500152,-0.126236'
+      get '/api/v1/places?cuisine=&occasion=lunch&location=40.732457, -73.998907'
 
       expect(response).to have_http_status(:success)
       expect(json).not_to be_empty
@@ -14,6 +14,9 @@ describe 'Places API', :type=>[:request] do
       expect(first_place['location']['latitude']).not_to be == 0
       expect(first_place['location']['longitude']).not_to be == 0
       expect(first_place['cuisineRelevance']).to be > 0
+
+      price_levels = json.map{|s| s['priceLevel']}.uniq
+      expect(price_levels.length).to be > 2 # some priceLevels should have been found
     end
   end
 end
