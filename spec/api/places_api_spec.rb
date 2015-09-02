@@ -14,9 +14,6 @@ describe 'Places API', :type=>[:request] do
       expect(first_place['location']['latitude']).not_to be == 0
       expect(first_place['location']['longitude']).not_to be == 0
       expect(first_place['cuisineRelevance']).to be > 0
-
-      price_levels = json.map{|s| s['priceLevel']}.uniq
-      expect(price_levels.length).to be > 2 # some priceLevels should have been found
     end
   end
 end
