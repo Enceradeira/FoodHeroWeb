@@ -6,7 +6,7 @@ module Search
 
       class << self
         def write_body_to_fake_file(min_price, max_price, body)
-          File.open(file_name_for_fake_file(max_price, min_price), 'w') { |file| file.write(body) }
+          File.open(file_name_for_fake_file(min_price, max_price), 'w') { |file| file.write(body) }
         end
 
         def file_name_for_fake_file(min_price, max_price)
@@ -22,8 +22,6 @@ module Search
             return []
           end
 
-          #write_body_to_fake_file(min_price,max_price,response.body)
-
           json['results'].map do |result|
             location = result['geometry']['location']
             coordinate = Domain::Coordinate.new(location['lat'], location['lng'])
@@ -34,6 +32,7 @@ module Search
         def default_connection
           @default_connection ||= Faraday.new(url: API_URL, params: {key: GOOGLE_API_KEY}, ssl: {verify: false}) do |faraday|
             faraday.adapter Faraday.default_adapter
+            #faraday.response :logger, ::Logger.new(STDOUT), bodies: false
           end
         end
 
@@ -65,6 +64,8 @@ module Search
         unless response.success?
           raise_error(response)
         end
+
+        #self.class.write_body_to_fake_file(min_price,max_price,response.body)
 
         self.class.proc_body_or_yield_error(response.body) {raise_error(response)}
       end
