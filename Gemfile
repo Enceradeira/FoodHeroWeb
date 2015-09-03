@@ -59,6 +59,7 @@ group :production do
 end
 
 # Configure ruby on Heroku (WARNING: When changing ruby-version change ALSO #ruby=)
+# See also .ruby-gemset and .ruby-version which configure ruby for RubyMine
 ruby '2.2.2'
 #ruby=ruby-2.2.2
 #ruby-gemset=FoodHero-Web
