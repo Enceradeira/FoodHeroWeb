@@ -16,10 +16,10 @@ module Search::Infrastructure
       let(:location) { Search::Domain::Coordinate.new(51.507571, -0.127702) }
       let(:radius) { 10000 }
       let(:cuisine) { 'Indian food' }
-      let(:types) { %w(restaurant meal_takeaway) }
+      let(:types) { %w(restaurant) }
       let(:min_price) { 1 }
       let(:max_price) { 4 }
-      let(:expected_url) { '/radarsearch/json?keyword=Indian+food&location=51.507571,-0.127702&radius=10000&minprice=1&maxprice=4&types=restaurant%7Cmeal_takeaway&opennow=1' }
+      let(:expected_url) { '/radarsearch/json?keyword=Indian+food&location=51.507571,-0.127702&radius=10000&type=restaurant&opennow=1' }
 
       let(:find_places) { lambda { search.find_places cuisine: cuisine, types: types, coordinate: location, radius: radius, min_price: min_price, max_price: max_price } }
       let(:response_code) { 200 }

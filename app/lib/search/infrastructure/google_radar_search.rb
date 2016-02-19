@@ -37,7 +37,7 @@ module Search
         end
 
         def find_places_in_fake_file(min_price, max_price)
-          file_name = GoogleRadarSearch.file_name_for_fake_file(min_price,max_price)
+          file_name = GoogleRadarSearch.file_name_for_fake_file(min_price, max_price)
           body = File.read(file_name)
           GoogleRadarSearch.proc_body_or_yield_error(body)
         end
@@ -48,26 +48,26 @@ module Search
       end
 
       def find_places(cuisine:, types:, coordinate:, radius:, min_price:, max_price:)
+        types.map do |type|
 
-        types_as_string = types.join('|')
+          response = @connection.get 'radarsearch/json',
+                                     {
+                                         keyword: cuisine,
+                                         location: "#{coordinate.latitude},#{coordinate.longitude}",
+                                         radius: radius,
+                                         #minprice: min_price, doesn't work as of 19.2.2016
+                                         #maxprice: max_price,
+                                         type: type,
+                                         opennow: 1
+                                     }
+          unless response.success?
+            raise_error(response)
+          end
 
-        response = @connection.get 'radarsearch/json',
-                                   {
-                                       keyword: cuisine,
-                                       location: "#{coordinate.latitude},#{coordinate.longitude}",
-                                       radius: radius,
-                                       minprice: min_price,
-                                       maxprice: max_price,
-                                       types: types_as_string,
-                                       opennow: 1
-                                   }
-        unless response.success?
-          raise_error(response)
-        end
+          #self.class.write_body_to_fake_file(min_price,max_price,response.body)
 
-        #self.class.write_body_to_fake_file(min_price,max_price,response.body)
-
-        self.class.proc_body_or_yield_error(response.body) {raise_error(response)}
+          self.class.proc_body_or_yield_error(response.body) { raise_error(response) }
+        end.flatten
       end
 
 
