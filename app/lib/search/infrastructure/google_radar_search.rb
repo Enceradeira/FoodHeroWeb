@@ -57,8 +57,8 @@ module Search
                                          radius: radius,
                                          #minprice: min_price, doesn't work as of 19.2.2016
                                          #maxprice: max_price,
-                                         type: type,
-                                         opennow: 1
+                                         type: type
+                                         #opennow: 1
                                      }
           unless response.success?
             raise_error(response)

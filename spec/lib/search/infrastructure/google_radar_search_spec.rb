@@ -19,7 +19,7 @@ module Search::Infrastructure
       let(:types) { %w(restaurant) }
       let(:min_price) { 1 }
       let(:max_price) { 4 }
-      let(:expected_url) { '/radarsearch/json?keyword=Indian+food&location=51.507571,-0.127702&radius=10000&type=restaurant&opennow=1' }
+      let(:expected_url) { '/radarsearch/json?keyword=Indian+food&location=51.507571,-0.127702&radius=10000&type=restaurant' }
 
       let(:find_places) { lambda { search.find_places cuisine: cuisine, types: types, coordinate: location, radius: radius, min_price: min_price, max_price: max_price } }
       let(:response_code) { 200 }
